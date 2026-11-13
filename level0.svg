@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 260">
+<defs><marker id="a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#24374b"/></marker></defs>
+<rect width="1000" height="260" fill="white"/>
+<g font-family="Arial,sans-serif" font-size="17" fill="#24374b">
+<rect x="390" y="40" width="250" height="170" fill="#edf3f9" stroke="#24374b" stroke-width="2"/>
+<text x="515" y="130" text-anchor="middle" font-weight="bold">Multiplier_top</text>
+<text x="55" y="72">clk</text><text x="55" y="104">reset</text>
+<text x="55" y="136">addr1_ROM [2:0]</text><text x="55" y="168">addr2_ROM [2:0]</text>
+<text x="55" y="200">addr_RAM [2:0]</text><text x="790" y="121">result [7:0]</text>
+<text x="790" y="145">RAM readback</text>
+<g stroke="#24374b" fill="none" stroke-width="1.7" marker-end="url(#a)">
+<path d="M235 67H390"/><path d="M235 99H390"/><path d="M235 131H390"/>
+<path d="M235 163H390"/><path d="M235 195H390"/><path d="M640 126H777"/>
+</g></g></svg>

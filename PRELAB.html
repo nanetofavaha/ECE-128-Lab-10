@@ -1,0 +1,50 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Lab 10 Prelab</title><style>body{font:17px Arial;color:#24374b;max-width:1000px;margin:2em auto;padding:0 20px}img,svg{width:100%;height:auto}h2{margin-top:2em}</style><h1>ECE 128 Lab 10 prelab</h1><h2>Level 0</h2><img src="level0.svg" alt="Level 0"><h2>Level 1 — based on slide 21</h2><img src="level1.svg" alt="Level 1"><p>ROM, register file, multiplier and RAM form the datapath. The controller selects the ROM address, loads the operands and enables the RAM write. The output is RAM readback.</p><h2 id="register-file">Level 1 close-up: Register file</h2><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="rf-title rf-desc">
+<title id="rf-title">Level 1 close-up of the register file</title>
+<desc id="rf-desc">W and DA enter a decoder that enables one of two registers. Both registers receive the same ROM data and feed both output multiplexers. SA selects register 0 for A and SB selects register 1 for B.</desc>
+<defs>
+<marker id="data-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#214c73"/></marker>
+<marker id="ctrl-arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#995c0a"/></marker>
+</defs>
+<rect width="960" height="460" fill="#fff"/>
+<g stroke="#24374b" stroke-width="1.5" fill="#edf3f9">
+<rect x="180" y="35" width="155" height="70" fill="#fff1d6"/>
+<rect x="250" y="145" width="160" height="75"/>
+<rect x="250" y="315" width="160" height="75"/>
+<rect x="690" y="140" width="130" height="80"/>
+<rect x="690" y="310" width="130" height="80"/>
+</g>
+<g fill="none" stroke="#214c73" stroke-width="2" marker-end="url(#data-arrow)">
+<path d="M30 175H250"/><path d="M120 175V345H250"/>
+<path d="M410 175H690"/><path d="M410 345H690"/>
+<path d="M485 175V325H690"/><path d="M555 345V200H690"/>
+<path d="M820 180H930"/><path d="M820 350H930"/>
+</g>
+<g fill="#214c73"><circle cx="120" cy="175" r="4"/><circle cx="485" cy="175" r="4"/><circle cx="555" cy="345" r="4"/></g>
+<g fill="none" stroke="#995c0a" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#ctrl-arrow)">
+<path d="M90 55H180"/><path d="M90 85H180"/>
+<path d="M335 55H370V145"/><path d="M335 85H445V280H375V315"/>
+<path d="M755 105V140"/><path d="M755 275V310"/>
+</g>
+<g font-family="Arial,sans-serif" font-size="16" fill="#24374b">
+<g text-anchor="middle">
+<text x="257" y="63">1-to-2 decoder</text><text x="257" y="87">selects which word loads</text>
+<text x="330" y="182">Register 0</text><text x="330" y="204">4 bits</text>
+<text x="330" y="352">Register 1</text><text x="330" y="374">4 bits</text>
+<text x="759" y="179">Mux A</text><text x="759" y="199">2-to-1</text>
+<text x="759" y="349">Mux B</text><text x="759" y="369">2-to-1</text>
+</g>
+<g fill="#814900">
+<text x="35" y="60">W</text><text x="35" y="90">DA</text>
+<text x="380" y="129">load 0</text><text x="381" y="302">load 1</text>
+<text x="768" y="116">SA = 0 (1 bit)</text><text x="768" y="286">SB = 1 (1 bit)</text>
+</g>
+<text x="30" y="160">D [3:0] from ROM</text>
+<text x="576" y="162">R00 [3:0]</text><text x="579" y="369">R01 [3:0]</text>
+<text x="674" y="170">0</text><text x="674" y="197">1</text>
+<text x="674" y="320">0</text><text x="674" y="341">1</text>
+<text x="847" y="169">A [3:0]</text><text x="847" y="339">B [3:0]</text>
+<text x="30" y="424">Solid blue: data. Dashed orange: control. Wires join only at dots.</text>
+<text x="30" y="447">Both registers share clk and reset. A and B feed the multiplier.</text>
+</g>
+</svg>
+<p><strong>Write side:</strong> The decoder combines <code>W</code> and <code>DA</code>. When <code>W=1</code>, <code>DA=0</code> enables register 0 and <code>DA=1</code> enables register 1. The selected register captures <code>D</code> at the next rising edge. When <code>W=0</code>, both hold.</p><p><strong>Read side:</strong> SA and SB use two bits total: one separate 1-bit select per mux. Both 4-bit registers feed both muxes. <code>SA</code> selects the source for A and <code>SB</code> selects the source for B. In Lab 10 the controller ties them to 0 and 1, respectively, so A always comes from register 0 and B from register 1. The muxes do not wait for a clock edge.</p><h2>Controller states</h2><img src="states.svg" alt="Controller states"><p>For 12 × 6: edge 1 leaves Idle, edge 2 captures 12, edge 3 captures 6, edge 4 enters Write, edge 5 stores 72, and edge 6 reads 72 back. Reset clears the RAM at a rising edge.</p></html>
