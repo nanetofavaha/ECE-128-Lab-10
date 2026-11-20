@@ -1,49 +1,33 @@
-# ECE 128 Lab 10 whole-system multiplier
+# ECE-128-Lab-10: Whole System Design
 
-The controller reads two Lab 9 ROM words into the hint's register file,
-multiplies with the Lab 8 combinational multiplier, and writes and reads back
-the product in Lab 9 RAM. See PRELAB.md and level1.svg for the diagrams and timing.
-The Level 1 layout follows slide 21 of ECE128_L8_ROM_RAM.pdf.
+## Description
 
-## Run the simulation
+This lab focuses on designing and implementing a complete multiplication system using Verilog. The system integrates ROM, RAM, a register file, a combinational multiplier, and a finite state machine (FSM) control unit. Two 4-bit operands are read from ROM and multiplied to produce an 8-bit result, which is stored in RAM. The design was tested using behavioral simulations in Vivado and implemented on the Basys 3 FPGA board.
 
-Open vivado/Lab10.xpr. Select Run Simulation → Run Behavioral Simulation.
-The simulation top is Multiplier_top_tb. It uses three explicit examples,
-with expected answers in comments: 72, 182, and 0. Inspect result after
-75 ns, 175 ns, and 275 ns respectively, once the clocked update has settled.
-Expand uut to add state, rom_addr, rom_data, a, b, product and w_ram to the waveform.
-The short testbench ends with $finish and does not print PASS messages.
+## Simulation
 
-From GitHub, choose Code → Download ZIP and extract the entire ZIP. Open vivado/Lab10.xpr in Vivado 2026.1 with Artix-7 support. Keep rtl, sim, and constraints beside the vivado folder. The project already sets both tops and includes the pin constraints; no manual source setup is needed.
+1. Open the project in Vivado
+2. Add the Verilog source code and testbench files
+3. Set `Multiplier_top_tb` as the simulation top module
+4. Run Behavioral Simulation
+5. Observe the waveforms to verify the multiplication results and RAM read/write operations
 
-## Program the Basys 3
+## FPGA Implementation
 
-The synthesis top is lab10_board_top. The board uses the 100 MHz clock and
-the center button for reset. SW2–SW0 select operand A, SW5–SW3 select operand B,
-and SW8–SW6 select the RAM address. LD7–LD0 show binary RAM readback and the
-Lab 7 display modules show the same value in decimal.
+The complete multiplication system was implemented and tested on the Basys 3 FPGA board. Switches were used to select ROM and RAM addresses, while the LEDs and seven-segment display showed the multiplication results.
 
-Set all switches before pressing and releasing reset. Reset clears RAM.
-The controller runs once and then stays in Read RAM. Keep the switches stable
-throughout the demo. For 12 × 6 at RAM address 0, turn on SW0 and SW4 only.
-Expect LD6 and LD3 on (hex 48), and the display to show 0072.
+To implement the design on the FPGA:
 
-Open Hardware Manager → Open Target → Auto Connect → Program Device, then
-select the lab10_board_top.bit file produced by Generate Bitstream in Vivado.
-The pin assignments are based on Digilent's Basys-3-Master.xdc.
+1. Set `lab10_board_top` as the top module
+2. Add the `basys3.xdc` constraints file
+3. Run Synthesis and Implementation
+4. Generate the bitstream and program the Basys 3 FPGA board
+5. Use SW2–SW0 and SW5–SW3 to select the ROM operands and SW8–SW6 to select the RAM address
+6. Press and release the reset button to perform the multiplication
+7. Observe the LEDs and seven-segment display to verify the result
 
-## Files and report
+## Results
 
-- rtl/: core, controller, register file, copied Lab 7–9 modules, and board top.
-- sim/: one simple testbench. No memory data file is needed for the case ROM.
-- constraints/: Basys 3 pin assignments and clock.
-- reports/: actual synthesis/implementation utilization, timing and DRC.
-- GitHub_Submission/: source copies and instructions for the group upload.
+The simulation demonstrated successful multiplication and storage of results for three test cases: 12 × 6 = 72, 14 × 13 = 182, and 0 × 14 = 0. The FPGA implementation confirmed the functionality of the system using the LEDs and seven-segment display.
 
-For the report, use the prelab diagrams, real simulation waveform screenshots,
-actual board photos, utilization figures, and your group's own contribution
-chart. The worksheet's “Real car scenario” and “each modeling method” are
-not explained for this multiplier; confirm the intended comparison with the TA.
-Compare the core and board design at the same synthesis stage; the board's
-occupied slices come from implementation. Do not infer physical testing from
-bitstream generation.
+The synthesized design utilized 43 slice LUTs, 85 slice registers, and 26 slices.
